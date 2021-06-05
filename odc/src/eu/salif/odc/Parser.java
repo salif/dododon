@@ -86,6 +86,9 @@ public class Parser {
 
 	private Token parseQuotes(char e) throws IOException {
 		Token token = new Token(Type.STRING);
+		char cf = (char) this.peek;
+		token.append(cf);
+		this.next();
 		while (notEOF()) {
 			char c = (char) this.peek;
 			token.append(c);
@@ -112,15 +115,7 @@ public class Parser {
 		}
 		String origIdent = orig.toString();
 		String newIdent = builder.toString();
-		return switch (origIdent) {
-			case "модул" -> "module";
-			case "функция" -> "fn";
-			case "върни" -> "return";
-			case "за" -> "for";
-			case "във" -> "in";
-			case "низ" -> "string";
-			default -> newIdent;
-		};
+		return Util.translateIdent(origIdent, newIdent);
 	}
 
 	private List<Token> parseFile() throws Exception {

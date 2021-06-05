@@ -33,27 +33,34 @@ public class Main {
 		if (args.length == 0) {
 			die(new Error("need more args"));
 		}
-		Path dirPath = Path.of(args[0]);
+		Path srcDir = Path.of(args[0]);
+		Path outDir;
+		if (args.length == 2) {
+			outDir = Path.of(args[1]);
+		} else {
+			outDir = srcDir.resolve("build");
+		}
 		try {
-			compileDir(dirPath, ".dond");
-			compileDir(dirPath, ".донд");
+			compileDir(srcDir, outDir, ".dond");
+			compileDir(srcDir, outDir, ".донд");
 		} catch (Exception e) {
 			die(e);
 		}
 	}
 
-	public static void compileDir(Path dir, String ext) throws Exception {
-		Path[] paths = Files.list(dir).filter(e -> e.toFile().isFile() && e.toFile().getName().endsWith(ext))
+	public static void compileDir(Path srcDir, Path outDir, String ext) throws Exception {
+		Path[] paths = Files.list(srcDir).filter(e -> e.toFile().isFile() && e.toFile().getName().endsWith(ext))
 				.toArray(Path[]::new);
+		Files.createDirectories(outDir);
 		for (Path path : paths) {
-			compileFile(dir, path);
+			compileFile(srcDir, outDir, path);
 		}
 	}
 
-	public static void compileFile(Path dir, Path path) throws IOException, Exception {
+	public static void compileFile(Path srcDir, Path outDir, Path path) throws IOException, Exception {
 		File file = path.toFile();
 		String fileName = file.getName();
-		Path outFileName = dir
+		Path outFileName = outDir
 				.resolve(Util.translateName(fileName.substring(0, fileName.lastIndexOf('.'))).concat(".v"));
 		try (Reader buffer = new BufferedReader(
 				new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {

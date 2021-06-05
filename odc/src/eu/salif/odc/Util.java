@@ -104,4 +104,26 @@ public class Util {
 		return builder.toString();
 	}
 
+	public static String translateIdent(String o, String n) {
+		return switch (o) {
+			case "модул" -> "module";
+			case "функция" -> "fn";
+			case "върни" -> "return";
+			case "пром" -> "mut";
+			case "структура" -> "struct";
+			case "за" -> "for";
+			case "във" -> "in";
+			case "ако" -> "if";
+			case "иначе" -> "else";
+			case "байт" -> "byte";
+			case "число" -> "int";
+			case "низ" -> "string";
+			case "бул" -> "bool";
+			case "вярно" -> "true";
+			case "невярно" -> "false";
+			case "assert" -> "потвърди";
+			default -> n;
+		};
+	}
+
 }
