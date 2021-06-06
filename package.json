@@ -6,6 +6,7 @@
   "scripts": {
     "odc_compile": "javac odc/src/eu/salif/odc/*.java -d odc/build",
     "odc_run": "java -cp odc/build eu.salif.odc.Main",
+	"odc_print_code": "java -cp odc/build eu.salif.odc.CodePrinter",
     "test": "exit 1"
   },
   "repository": {

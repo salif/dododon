@@ -28,12 +28,13 @@ public class Token {
 		this.type = t;
 	}
 
-	void append(char c) {
-		this.value.append(c);
+	public Token(Type t, String s) {
+		this(t);
+		this.value.append(s);
 	}
 
-	void appendString(String str) {
-		this.value.append(str);
+	void append(char c) {
+		this.value.append(c);
 	}
 
 	public String getValue() {

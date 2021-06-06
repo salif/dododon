@@ -53,11 +53,11 @@ public class Main {
 				.toArray(Path[]::new);
 		Files.createDirectories(outDir);
 		for (Path path : paths) {
-			compileFile(srcDir, outDir, path);
+			compileFile(outDir, path);
 		}
 	}
 
-	public static void compileFile(Path srcDir, Path outDir, Path path) throws IOException, Exception {
+	public static void compileFile(Path outDir, Path path) throws IOException, Exception {
 		File file = path.toFile();
 		String fileName = file.getName();
 		Path outFileName = outDir
@@ -68,7 +68,7 @@ public class Main {
 		}
 	}
 
-	private static void die(Throwable t) {
+	static void die(Throwable t) {
 		t.printStackTrace();
 		System.exit(1);
 	}

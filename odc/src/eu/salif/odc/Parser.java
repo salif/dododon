@@ -35,24 +35,24 @@ public class Parser {
 		this.buffer = buffer;
 	}
 
-	private boolean notEOF() {
+	public boolean notEOF() {
 		return this.peek != -1;
 	}
 
-	private void next() throws IOException {
+	public void next() throws IOException {
 		this.peek = buffer.read();
 	}
 
-	private Token parseNumber() throws IOException {
-		Token token = new Token(Type.INT);
+	public Token parseNumber() throws IOException {
+		Token token = new Token(Type.NUMBER);
 		while (notEOF()) {
 			char c = (char) this.peek;
 			if (!Util.isDigit(c)) {
 				if (c == '.') {
-					token.setType(Type.FLOAT);
 					token.append(c);
 					this.next();
 					while (notEOF()) {
+						c = (char) this.peek;
 						if (!Util.isDigit(c)) {
 							break;
 						}
@@ -68,10 +68,8 @@ public class Parser {
 		return token;
 	}
 
-	private Token parseComment() throws IOException {
-		Token token = new Token(Type.COMMENT);
-		token.append('/');
-		token.append('/');
+	public Token parseComment() throws IOException {
+		Token token = new Token(Type.COMMENT, "//");
 		this.next();
 		while (notEOF()) {
 			char c = (char) this.peek;
@@ -84,7 +82,7 @@ public class Parser {
 		return token;
 	}
 
-	private Token parseQuotes(char e) throws IOException {
+	public Token parseQuotes(char e) throws IOException {
 		Token token = new Token(Type.STRING);
 		char cf = (char) this.peek;
 		token.append(cf);
@@ -100,32 +98,27 @@ public class Parser {
 		return token;
 	}
 
-	private String parseIdent() throws IOException {
+	public Token parseIdent() throws IOException {
 		StringBuilder builder = new StringBuilder();
-		StringBuilder orig = new StringBuilder();
 		while (notEOF()) {
 			char c = (char) this.peek;
 			String i = Util.translate(c);
 			if (i == null) {
 				break;
 			}
-			builder.append(i);
-			orig.append(c);
+			builder.append(c);
 			this.next();
 		}
-		String origIdent = orig.toString();
-		String newIdent = builder.toString();
-		return Util.translateIdent(origIdent, newIdent);
+		return new Token(Type.IDENT, builder.toString());
 	}
 
-	private List<Token> parseFile() throws Exception {
+	public List<Token> parseFile() throws Exception {
 		List<Token> tokens = new LinkedList<>();
 		this.next();
 		while (notEOF()) {
 			char c = (char) this.peek;
 			if (c == '\t' || c == '\r' || c == ' ') {
-				Token token = new Token(Type.WS);
-				token.append(c);
+				Token token = new Token(Type.WHITESPACE, String.valueOf(c));
 				tokens.add(token);
 				this.next();
 			} else if (Util.isDigit(c)) {
@@ -140,18 +133,11 @@ public class Parser {
 				tokens.add(parseQuotes('"'));
 			} else if (c == '„') {
 				String value = parseQuotes('“').getValue();
-				Token token = new Token(Type.STRING);
-				token.append('"');
-				token.appendString(value.substring(1, value.length() - 1));
-				token.append('"');
-				tokens.add(token);
+				tokens.add(new Token(Type.STRING, '"' + value.substring(1, value.length() - 1) + '"'));
 			} else if (Util.translate(c) != null) {
-				Token token = new Token(Type.IDENT);
-				token.appendString(parseIdent());
-				tokens.add(token);
+				tokens.add(parseIdent());
 			} else {
-				Token token = new Token(Type.UNKNOWN);
-				token.append(c);
+				Token token = new Token(Type.UNKNOWN, String.valueOf(c));
 				tokens.add(token);
 				this.next();
 			}

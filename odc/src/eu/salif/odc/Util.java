@@ -28,7 +28,7 @@ public class Util {
 	}
 
 	public static String translate(char c) {
-		if (isNIdent(c)) {
+		if (isNIdent(c) || isDigit(c)) {
 			return String.valueOf(c);
 		}
 		return switch (c) {
@@ -104,26 +104,74 @@ public class Util {
 		return builder.toString();
 	}
 
-	public static String translateIdent(String o, String n) {
-		return switch (o) {
-			case "модул" -> "module";
-			case "функция" -> "fn";
-			case "върни" -> "return";
-			case "пром" -> "mut";
-			case "структура" -> "struct";
-			case "за" -> "for";
-			case "във" -> "in";
-			case "ако" -> "if";
-			case "иначе" -> "else";
-			case "байт" -> "byte";
-			case "число" -> "int";
-			case "низ" -> "string";
-			case "бул" -> "bool";
-			case "вярно" -> "true";
-			case "невярно" -> "false";
-			case "assert" -> "потвърди";
-			default -> n;
+	private static final Token TOKEN_PUB = new Token(Type.KEYWORD, "pub");
+	private static final Token TOKEN_MODULE = new Token(Type.KEYWORD, "module");
+	private static final Token TOKEN_IMPORT = new Token(Type.KEYWORD, "import");
+	private static final Token TOKEN_FN = new Token(Type.KEYWORD, "fn");
+	private static final Token TOKEN_RETURN = new Token(Type.KEYWORD, "return");
+	private static final Token TOKEN_NEKA = new Token(Type.KEYWORD, "нека");
+	private static final Token TOKEN_MUT = new Token(Type.KEYWORD, "mut");
+	private static final Token TOKEN_STRUCT = new Token(Type.KEYWORD, "struct");
+	private static final Token TOKEN_FOR = new Token(Type.KEYWORD, "for");
+	private static final Token TOKEN_IN = new Token(Type.KEYWORD, "in");
+	private static final Token TOKEN_IF = new Token(Type.KEYWORD, "if");
+	private static final Token TOKEN_ELSE = new Token(Type.KEYWORD, "else");
+	private static final Token TOKEN_MAP = new Token(Type.TYPE, "map");
+	private static final Token TOKEN_BYTE = new Token(Type.TYPE, "byte");
+	private static final Token TOKEN_INT = new Token(Type.TYPE, "int");
+	private static final Token TOKEN_STRING = new Token(Type.TYPE, "string");
+	private static final Token TOKEN_BOOL = new Token(Type.TYPE, "bool");
+	private static final Token TOKEN_TRUE = new Token(Type.CONSTANT, "true");
+	private static final Token TOKEN_FALSE = new Token(Type.CONSTANT, "false");
+	private static final Token TOKEN_ASSERT = new Token(Type.KEYWORD, "assert");
+
+	public static Token translateIdent(Token token) {
+		return switch (token.getValue()) {
+			case "pub" -> TOKEN_PUB;
+			case "модул" -> TOKEN_MODULE;
+			case "module" -> TOKEN_MODULE;
+			case "импорт" -> TOKEN_IMPORT;
+			case "import" -> TOKEN_IMPORT;
+			case "функция" -> TOKEN_FN;
+			case "fn" -> TOKEN_FN;
+			case "върни" -> TOKEN_RETURN;
+			case "return" -> TOKEN_RETURN;
+			case "нека" -> TOKEN_NEKA;
+			case "пром" -> TOKEN_MUT;
+			case "mut" -> TOKEN_MUT;
+			case "структура" -> TOKEN_STRUCT;
+			case "struct" -> TOKEN_STRUCT;
+			case "за" -> TOKEN_FOR;
+			case "for" -> TOKEN_FOR;
+			case "във" -> TOKEN_IN;
+			case "in" -> TOKEN_IN;
+			case "ако" -> TOKEN_IF;
+			case "if" -> TOKEN_IF;
+			case "иначе" -> TOKEN_ELSE;
+			case "else" -> TOKEN_ELSE;
+			case "речник" -> TOKEN_MAP;
+			case "map" -> TOKEN_MAP;
+			case "байт" -> TOKEN_BYTE;
+			case "byte" -> TOKEN_BYTE;
+			case "число" -> TOKEN_INT;
+			case "int" -> TOKEN_INT;
+			case "низ" -> TOKEN_STRING;
+			case "string" -> TOKEN_STRING;
+			case "бул" -> TOKEN_BOOL;
+			case "bool" -> TOKEN_BOOL;
+			case "вярно" -> TOKEN_TRUE;
+			case "true" -> TOKEN_TRUE;
+			case "невярно" -> TOKEN_FALSE;
+			case "false" -> TOKEN_FALSE;
+			case "потвърди" -> TOKEN_ASSERT;
+			case "assert" -> TOKEN_ASSERT;
+			default -> {
+				StringBuilder builder = new StringBuilder();
+				for (char c : token.getValue().toCharArray()) {
+					builder.append(translate(c));
+				}
+				yield new Token(Type.IDENT, builder.toString());
+			}
 		};
 	}
-
 }

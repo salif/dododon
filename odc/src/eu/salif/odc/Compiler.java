@@ -24,7 +24,30 @@ public class Compiler {
 	public static StringBuilder compile(Reader buffer) throws Exception {
 		List<Token> tokens = Parser.parse(buffer);
 		StringBuilder builder = new StringBuilder();
+		boolean isWFO = false;
+		boolean isNFD = false;
 		for (Token token : tokens) {
+			if (isWFO) {
+				if (isNFD) {
+					isNFD = false;
+					continue;
+				}
+				if (token.getValue().equals("=")) {
+					token = new Token(Type.UNKNOWN, ":=");
+					isWFO = false;
+				}
+			}
+			if (token.getType().equals(Type.IDENT)) {
+				if (token.getValue().equals("нека")) {
+					isWFO = true;
+					isNFD = true;
+					continue;
+				}
+				if (token.getValue().equals("пром")) {
+					isWFO = true;
+				}
+				token = Util.translateIdent(token);
+			}
 			builder.append(token.toString());
 		}
 		return builder;
