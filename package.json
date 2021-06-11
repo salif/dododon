@@ -1,25 +1,27 @@
 {
-  "name": "dododon",
-  "version": "0.1.0",
-  "description": "Dododon",
-  "main": ".",
-  "scripts": {
-    "odc_compile": "javac odc/src/eu/salif/odc/*.java -d odc/build",
-    "odc_run": "java -cp odc/build eu.salif.odc.Main",
-	"odc_print_code": "java -cp odc/build eu.salif.odc.CodePrinter",
-    "test": "exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/salif/dododon.git"
-  },
-  "keywords": [
-    "dododon"
-  ],
-  "author": "Salif Mehmed <mail@salif.eu>",
-  "license": "AGPL-3.0",
-  "bugs": {
-    "url": "https://github.com/salif/dododon/issues"
-  },
-  "homepage": "https://github.com/salif/dododon#readme"
+	"name": "dododon",
+	"version": "0.1.0",
+	"description": "Dododon",
+	"main": ".",
+	"scripts": {
+		"odc_compile": "javac odc/src/eu/salif/odc/*.java -d odc/build",
+		"odc_print_code": "java -cp odc/build eu.salif.odc.CodePrinter",
+		"odc_print_ast": "java -cp odc/build eu.salif.odc.AstPrinter",
+		"compile": "java -cp odc/build eu.salif.odc.Main",
+		"selfcompile": "npm run compile ./src/ ./build/ && v ./build -o ./build/dododon",
+		"test": "exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/salif/dododon.git"
+	},
+	"keywords": [
+		"dododon"
+	],
+	"author": "Salif Mehmed <mail@salif.eu>",
+	"license": "AGPL-3.0",
+	"bugs": {
+		"url": "https://github.com/salif/dododon/issues"
+	},
+	"homepage": "https://github.com/salif/dododon#readme"
 }

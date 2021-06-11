@@ -30,41 +30,56 @@ import java.nio.file.Path;
 public class Main {
 
 	public static void main(String[] args) {
-		if (args.length == 0) {
-			die(new Error("need more args"));
+		if (args.length < 2) {
+			die(new Error("need two arguments"));
 		}
 		Path srcDir = Path.of(args[0]);
-		Path outDir;
-		if (args.length == 2) {
-			outDir = Path.of(args[1]);
-		} else {
-			outDir = srcDir.resolve("build");
+		checkDir(srcDir);
+		Path outDir = Path.of(args[1]);
+		if (!Files.exists(outDir)) {
+			try {
+				Files.createDirectories(outDir);
+			} catch (IOException e) {
+				die(e);
+			}
 		}
+		checkDir(outDir);
 		try {
-			compileDir(srcDir, outDir, ".dond");
-			compileDir(srcDir, outDir, ".донд");
+			compileDir(srcDir, outDir);
 		} catch (Exception e) {
 			die(e);
 		}
 	}
 
-	public static void compileDir(Path srcDir, Path outDir, String ext) throws Exception {
-		Path[] paths = Files.list(srcDir).filter(e -> e.toFile().isFile() && e.toFile().getName().endsWith(ext))
-				.toArray(Path[]::new);
-		Files.createDirectories(outDir);
+	public static void compileDir(Path srcDir, Path outDir) throws Exception {
+		Path[] paths = Files.list(srcDir).toArray(Path[]::new);
 		for (Path path : paths) {
-			compileFile(outDir, path);
+			File file = path.toFile();
+			if (file.isFile()) {
+				if (file.getName().endsWith(".донд") || file.getName().endsWith(".dond")) {
+					compileFile(file, outDir);
+				}
+			} else if (file.isDirectory()) {
+				Path newOutDir = outDir.resolve(Util.translateName(file.getName()));
+				Files.createDirectories(newOutDir);
+				compileDir(path, newOutDir);
+			}
 		}
 	}
 
-	public static void compileFile(Path outDir, Path path) throws IOException, Exception {
-		File file = path.toFile();
+	public static void compileFile(File file, Path outDir) throws IOException, Exception {
 		String fileName = file.getName();
 		Path outFileName = outDir
 				.resolve(Util.translateName(fileName.substring(0, fileName.lastIndexOf('.'))).concat(".v"));
 		try (Reader buffer = new BufferedReader(
 				new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
 			Files.writeString(outFileName, Compiler.compile(buffer), StandardCharsets.UTF_8);
+		}
+	}
+
+	public static void checkDir(Path dir) {
+		if (!Files.isDirectory(dir)) {
+			die(new Exception(String.format("%s is not a directory", dir.toString())));
 		}
 	}
 

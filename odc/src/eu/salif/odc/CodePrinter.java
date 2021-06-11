@@ -46,6 +46,8 @@ public class CodePrinter {
 				new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
 			List<Token> tokens = Parser.parse(buffer);
 			StringBuilder builder = new StringBuilder();
+			builder.append(System.lineSeparator());
+			builder.append(Color.ANSI_BG_BLACK);
 			for (Token token : tokens) {
 				String value = token.getValue();
 				switch (token.getType()) {
@@ -55,17 +57,14 @@ public class CodePrinter {
 					case COMMENT:
 						builder.append(Color.ANSI_BRIGHT_BLACK);
 						builder.append(value);
-						builder.append(Color.ANSI_RESET);
 						break;
 					case NUMBER:
 						builder.append(Color.ANSI_BRIGHT_BLUE);
 						builder.append(value);
-						builder.append(Color.ANSI_RESET);
 						break;
 					case STRING:
 						builder.append(Color.ANSI_YELLOW);
 						builder.append(value);
-						builder.append(Color.ANSI_RESET);
 						break;
 					case IDENT:
 						Token newToken = Util.translateIdent(token);
@@ -73,37 +72,42 @@ public class CodePrinter {
 							case IDENT:
 								builder.append(Color.ANSI_WHITE);
 								builder.append(value);
-								builder.append(Color.ANSI_RESET);
 								break;
 							case KEYWORD:
 								builder.append(Color.ANSI_RED);
 								builder.append(value);
-								builder.append(Color.ANSI_RESET);
 								break;
 							case TYPE:
 								builder.append(Color.ANSI_CYAN);
 								builder.append(value);
-								builder.append(Color.ANSI_RESET);
 								break;
 							case CONSTANT:
 								builder.append(Color.ANSI_BLUE);
 								builder.append(value);
-								builder.append(Color.ANSI_RESET);
+								break;
+							case BUILTIN:
+								builder.append(Color.ANSI_GREEN);
+								builder.append(value);
 								break;
 							default:
+								builder.append(value);
 								break;
 						}
 						break;
-					case UNKNOWN:
-						builder.append(Color.ANSI_PURPLE);
+					case BRACKET:
+						builder.append(Color.ANSI_BRIGHT_PURPLE);
 						builder.append(value);
-						builder.append(Color.ANSI_RESET);
+						break;
+					case UNKNOWN:
+						builder.append(Color.ANSI_BRIGHT_RED);
+						builder.append(value);
 						break;
 					default:
 						builder.append(value);
 						break;
 				}
 			}
+			builder.append(Color.ANSI_RESET);
 			return builder;
 		}
 	}

@@ -16,6 +16,6 @@ npm run odc_compile
 ## Run an example
 
 ```
-npm run odc_run examples
-v run examples/
+npm run compile ./odc/examples/src/hello_world/ ./odc/examples/build/hello_world/
+v run ./odc/examples/build/hello_world/
 ```

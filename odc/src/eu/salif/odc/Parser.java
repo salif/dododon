@@ -117,7 +117,7 @@ public class Parser {
 		this.next();
 		while (notEOF()) {
 			char c = (char) this.peek;
-			if (c == '\t' || c == '\r' || c == ' ') {
+			if (c == '\t' || c == '\r' || c == '\n' || c == ' ') {
 				Token token = new Token(Type.WHITESPACE, String.valueOf(c));
 				tokens.add(token);
 				this.next();
@@ -136,6 +136,10 @@ public class Parser {
 				tokens.add(new Token(Type.STRING, '"' + value.substring(1, value.length() - 1) + '"'));
 			} else if (Util.translate(c) != null) {
 				tokens.add(parseIdent());
+			} else if (c == '(' || c == ')' || c == '[' || c == ']' || c == '{' || c == '}') {
+				Token token = new Token(Type.BRACKET, String.valueOf(c));
+				tokens.add(token);
+				this.next();
 			} else {
 				Token token = new Token(Type.UNKNOWN, String.valueOf(c));
 				tokens.add(token);

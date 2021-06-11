@@ -1,0 +1,36 @@
+{
+	"name": "dododon",
+	"displayName": "Dododon",
+	"description": "Syntax highlighting for Dododon",
+	"version": "0.1.1",
+	"publisher": "null",
+	"engines": {
+		"vscode": "^1.56.0"
+	},
+	"categories": [
+		"Programming Languages"
+	],
+	"contributes": {
+		"languages": [
+			{
+				"id": "dododon",
+				"aliases": [
+					"Dododon",
+					"dododon"
+				],
+				"extensions": [
+					".dond",
+					".донд"
+				],
+				"configuration": "./language-configuration.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "dododon",
+				"scopeName": "source.dododon",
+				"path": "./syntaxes/dododon.tmLanguage.json"
+			}
+		]
+	}
+}

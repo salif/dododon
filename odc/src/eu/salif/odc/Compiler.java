@@ -46,6 +46,9 @@ public class Compiler {
 				if (token.getValue().equals("пром")) {
 					isWFO = true;
 				}
+				if (token.getValue().equals("функция")) {
+					builder.append("pub ");
+				}
 				token = Util.translateIdent(token);
 			}
 			builder.append(token.toString());

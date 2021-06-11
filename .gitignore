@@ -21,7 +21,7 @@
 # virtual machine crash logs
 hs_err_pid*
 
-/.idea/
+.idea/
 .DS_Store
 .DS_Store?
 ._*

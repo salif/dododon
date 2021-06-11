@@ -18,6 +18,7 @@
 package eu.salif.odc;
 
 public class Color {
+	public static final String ANSI_BG_BLACK = "\u001B[40m";
 	public static final String ANSI_RESET = "\u001B[0m";
 	public static final String ANSI_BLACK = "\u001B[30m";
 	public static final String ANSI_RED = "\u001B[31m";

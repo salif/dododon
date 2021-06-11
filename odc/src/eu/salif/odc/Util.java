@@ -124,13 +124,19 @@ public class Util {
 	private static final Token TOKEN_TRUE = new Token(Type.CONSTANT, "true");
 	private static final Token TOKEN_FALSE = new Token(Type.CONSTANT, "false");
 	private static final Token TOKEN_ASSERT = new Token(Type.KEYWORD, "assert");
+	private static final Token TOKEN_PRINTLN = new Token(Type.BUILTIN, "println");
+	private static final Token TOKEN_PRINT = new Token(Type.BUILTIN, "print");
+	private static final Token TOKEN_EPRINTLN = new Token(Type.BUILTIN, "eprintln");
+	private static final Token TOKEN_EPRINT = new Token(Type.BUILTIN, "eprint");
+	private static final Token TOKEN_EXIT = new Token(Type.BUILTIN, "exit");
+	private static final Token TOKEN_PANIC = new Token(Type.BUILTIN, "panic");
 
 	public static Token translateIdent(Token token) {
 		return switch (token.getValue()) {
 			case "pub" -> TOKEN_PUB;
 			case "модул" -> TOKEN_MODULE;
 			case "module" -> TOKEN_MODULE;
-			case "импорт" -> TOKEN_IMPORT;
+			case "импортни" -> TOKEN_IMPORT;
 			case "import" -> TOKEN_IMPORT;
 			case "функция" -> TOKEN_FN;
 			case "fn" -> TOKEN_FN;
@@ -165,6 +171,18 @@ public class Util {
 			case "false" -> TOKEN_FALSE;
 			case "потвърди" -> TOKEN_ASSERT;
 			case "assert" -> TOKEN_ASSERT;
+			case "принтнилн" -> TOKEN_PRINTLN;
+			case "println" -> TOKEN_PRINTLN;
+			case "принтни" -> TOKEN_PRINT;
+			case "print" -> TOKEN_PRINT;
+			case "епринтнилн" -> TOKEN_EPRINTLN;
+			case "eprintln" -> TOKEN_EPRINTLN;
+			case "епринтни" -> TOKEN_EPRINT;
+			case "eprint" -> TOKEN_EPRINT;
+			case "излез" -> TOKEN_EXIT;
+			case "exit" -> TOKEN_EXIT;
+			case "паник" -> TOKEN_PANIC;
+			case "panic" -> TOKEN_PANIC;
 			default -> {
 				StringBuilder builder = new StringBuilder();
 				for (char c : token.getValue().toCharArray()) {
