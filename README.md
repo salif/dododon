@@ -1,4 +1,6 @@
-# Dododon
+# The Dododon Programming Language
+
+A programming language with a Bulgarian-based syntax that transpiles to V
 
 ## Dependencies
 

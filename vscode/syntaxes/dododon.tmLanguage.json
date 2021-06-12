@@ -87,7 +87,7 @@
 	],
 	"repository": {
 		"as-is": {
-			"begin": "\\s+(as|is|както|е)\\s+",
+			"begin": "\\s+(като|е)\\s+",
 			"beginCaptures": {
 				"1": {
 					"name": "keyword.$1.v"
@@ -273,11 +273,11 @@
 					"patterns": [
 						{
 							"name": "storage.modifier.v",
-							"match": "(const)(?=\\s*\\()"
+							"match": "(нека)(?=\\s*\\()"
 						},
 						{
 							"name": "keyword.$1.v",
-							"match": "\\b(fn|функция|type|тип|enum|енум|struct|структура|union|interface|интерфейс|map|речник|assert|потвърди|sizeof|typeof|__offsetof)\\b(?=\\s*\\()"
+							"match": "\\b(функция|тип|енум|структура|union|интерфейс|речник|потвърди|sizeof|typeof|__offsetof)\\b(?=\\s*\\()"
 						}
 					]
 				},
@@ -285,18 +285,18 @@
 					"patterns": [
 						{
 							"name": "keyword.control.v",
-							"match": "(\\$if|\\$ако|\\$else|\\$иначе)(?=\\s*\\()"
+							"match": "(\\$ако|\\$иначе)(?=\\s*\\()"
 						},
 						{
 							"name": "keyword.control.v",
-							"match": "\\b(as|in|във|is|е|or|или|break|continue|default|unsafe|match|if|ако|else|иначе|for|за|go|goto|defer|return|върни|shared|select|rlock|lock|atomic|asm)\\b(?=\\s*\\()"
+							"match": "\\b(като|във|е|или|прекъсни|продължи|default|unsafe|match|ако|иначе|go|goto|defer|върни|shared|select|rlock|lock|atomic|asm)\\b(?=\\s*\\()"
 						}
 					]
 				},
 				{
 					"patterns": [
 						{
-							"match": "(i?(?:8|16|nt|64|128)|ч?(?:8|16|исло|64|128)|u?(?:16|32|64|128)|f?(?:32|64)|ф?(?:32|64))(?=\\s*\\()",
+							"match": "(ч?(?:8|16|32|64|128)|u?(?:16|32|64|128)|ф?(?:32|64))(?=\\s*\\()",
 							"captures": {
 								"1": {
 									"name": "storage.type.numeric.v"
@@ -305,7 +305,7 @@
 							"name": "meta.expr.numeric.cast.v"
 						},
 						{
-							"match": "(bool|бул|byte|байт|byteptr|charptr|voidptr|string|низ|ustring|rune)(?=\\s*\\()",
+							"match": "(бул|байт|byteptr|charptr|voidptr|низ|ustring|rune)(?=\\s*\\()",
 							"captures": {
 								"1": {
 									"name": "storage.type.$1.v"
@@ -319,7 +319,7 @@
 		},
 		"escaped-fix": {
 			"name": "meta.escaped.keyword.v",
-			"match": "((?:@)(?:mut|пром|нека|pub|fn|функция|unsafe|module|модул|import|импортни|as|const|map|речник|assert|sizeof|__offsetof|typeof|type|тип|struct|структура|interface|интерфейс|enum|енум|in|във|is|е|or|или|match|if|ако|else|иначе|for|за|go|goto|defer|return|върни|shared|select|rlock|lock|atomic|asm|i?(?:8|16|nt|64|128)|ч?(?:8|16|исло|64|128)|u?(?:16|32|64|128)|f?(?:32|64)|ф?(?:32|64)|bool|бул|byte|байт|byteptr|charptr|voidptr|string|низ|ustring|rune))",
+			"match": "((?:@)(?:пром|нека|функция|unsafe|модул|импортни|като|речник|потвърди|sizeof|__offsetof|typeof|type|тип|структура|интерфейс|енум|във|е|или|match|ако|иначе|за|go|goto|defer|върни|shared|select|rlock|lock|atomic|asm|ч?(?:8|16|32|64|128)|u?(?:16|32|64|128)|ф?(?:32|64)|бул|байт|byteptr|charptr|voidptr|низ|ustring|rune))",
 			"captures": {
 				"0": {
 					"name": "keyword.other.escaped.v"
@@ -393,7 +393,7 @@
 		},
 		"function-decl": {
 			"name": "meta.definition.function.v",
-			"begin": "^\\s*(pub)?\\s*(fn|функция)\\s+",
+			"begin": "^\\s*(pub)?\\s*(функция)\\s+",
 			"beginCaptures": {
 				"1": {
 					"name": "storage.modifier.v"
@@ -426,7 +426,7 @@
 		},
 		"function-extend-decl": {
 			"name": "meta.definition.function.v",
-			"match": "^\\s*(pub)?\\s*(fn|функция)\\s*(\\()([^\\)]*)(\\))\\s*(?:(?:C\\.)?)(\\w+)\\s*((?<=[\\w\\s+])(\\<)(\\w+)(\\>))?",
+			"match": "^\\s*(pub)?\\s*(функция)\\s*(\\()([^\\)]*)(\\))\\s*(?:(?:C\\.)?)(\\w+)\\s*((?<=[\\w\\s+])(\\<)(\\w+)(\\>))?",
 			"captures": {
 				"1": {
 					"name": "storage.modifier.v"
@@ -481,7 +481,7 @@
 		},
 		"function-limited-overload-decl": {
 			"name": "meta.definition.function.v",
-			"match": "^\\s*(pub)?\\s*(fn|функция)\\s*(\\()([^\\)]*)(\\))\\s*([\\+\\-\\*\\/])?\\s*(\\()([^\\)]*)(\\))\\s*(?:(?:C\\.)?)(\\w+)",
+			"match": "^\\s*(pub)?\\s*(функция)\\s*(\\()([^\\)]*)(\\))\\s*([\\+\\-\\*\\/])?\\s*(\\()([^\\)]*)(\\))\\s*(?:(?:C\\.)?)(\\w+)",
 			"captures": {
 				"1": {
 					"name": "storage.modifier.v"
@@ -588,7 +588,7 @@
 		},
 		"type": {
 			"name": "meta.definition.type.v",
-			"match": "^\\s*(?:(pub)?\\s+)?(type|тип)\\s+(\\w*)\\s+(?:\\w+\\.+)?(\\w*)",
+			"match": "^\\s*(?:(pub)?\\s+)?(тип)\\s+(\\w*)\\s+(?:\\w+\\.+)?(\\w*)",
 			"captures": {
 				"1": {
 					"name": "storage.modifier.$1.v"
@@ -628,7 +628,7 @@
 		},
 		"enum": {
 			"name": "meta.definition.enum.v",
-			"match": "^\\s*(?:(pub)?\\s+)?(enum|енум)\\s+(?:\\w+\\.)?(\\w*)",
+			"match": "^\\s*(?:(pub)?\\s+)?(енум)\\s+(?:\\w+\\.)?(\\w*)",
 			"captures": {
 				"1": {
 					"name": "storage.modifier.$1.v"
@@ -643,7 +643,7 @@
 		},
 		"interface": {
 			"name": "meta.definition.interface.v",
-			"match": "^\\s*(?:(pub)?\\s+)?(interface|интерфейс)\\s+(\\w*)",
+			"match": "^\\s*(?:(pub)?\\s+)?(интерфейс)\\s+(\\w*)",
 			"captures": {
 				"1": {
 					"name": "storage.modifier.$1.v"
@@ -668,7 +668,7 @@
 			"patterns": [
 				{
 					"name": "meta.definition.struct.v",
-					"begin": "^\\s*(?:(mut|пром|pub(?:\\s+mut)?|__global)\\s+)?(struct|структура|union)\\s+([\\w.]+)\\s*|({)",
+					"begin": "^\\s*(?:(пром|pub(?:\\s+mut)?|__global)\\s+)?(структура|union)\\s+([\\w.]+)\\s*|({)",
 					"beginCaptures": {
 						"1": {
 							"name": "storage.modifier.$1.v"
@@ -738,7 +738,7 @@
 				},
 				{
 					"name": "meta.definition.struct.v",
-					"match": "^\\s*(?:(mut|пром|pub(?:\\s+mut)?|__global))\\s+?(struct|структура)\\s+(?:\\s+([\\w.]+))?",
+					"match": "^\\s*(?:(пром|pub(?:\\s+mut)?|__global))\\s+?(структура)\\s+(?:\\s+([\\w.]+))?",
 					"captures": {
 						"1": {
 							"name": "storage.modifier.$1.v"
@@ -754,7 +754,7 @@
 			]
 		},
 		"struct-access-modifier": {
-			"match": "(?<=\\s|^)(mut|пром|pub(?:\\s+mut)?|__global)(:|\\b)",
+			"match": "(?<=\\s|^)(пром|pub(?:\\s+mut)?|__global)(:|\\b)",
 			"captures": {
 				"1": {
 					"name": "storage.modifier.$1.v"
@@ -792,31 +792,31 @@
 			"patterns": [
 				{
 					"name": "keyword.control.v",
-					"match": "(\\$if|\\$ако|\\$else|\\$иначе)"
+					"match": "(\\$ако|\\$иначе)"
 				},
 				{
 					"name": "keyword.control.v",
-					"match": "\\b(as|it|is|in|във|or|или|break|continue|default|unsafe|match|if|ако|else|иначе|for|за|go|goto|defer|return|върни|shared|select|rlock|lock|atomic|asm)\\b"
+					"match": "\\b(като|то|e|във|или|прекъсни|продължи|default|unsafe|match|ако|иначе|за|go|goto|defer|върни|shared|select|rlock|lock|atomic|asm)\\b"
 				},
 				{
 					"name": "keyword.$1.v",
-					"match": "\\b(fn|функция|type|тип|typeof|enum|енум|struct|структура|interface|интерфейс|map|речник|assert|sizeof|__offsetof)\\b"
+					"match": "\\b(функция|type|тип|typeof|енум|структура|интерфейс|речник|потвърди|sizeof|__offsetof)\\b"
 				}
 			]
 		},
 		"storage": {
 			"name": "storage.modifier.v",
-			"match": "\\b(const|mut|пром|нека|pub)\\b"
+			"match": "\\b(пром|нека)\\b"
 		},
 		"types": {
 			"patterns": [
 				{
 					"name": "storage.type.numeric.v",
-					"match": "\\b(i(8|16|nt|64|128)|ч(8|16|исло|64|128)|u(8|16|32|64|128)|f(32|64)|ф(32|64))\\b"
+					"match": "\\b(ч(8|16|32|64|128)|u(8|16|32|64|128)|ф(32|64))\\b"
 				},
 				{
 					"name": "storage.type.$1.v",
-					"match": "\\b(bool|бул|byte|байт|byteptr|charptr|voidptr|string|низ|ustring|rune)\\b"
+					"match": "\\b(бул|байт|byteptr|charptr|voidptr|низ|ustring|rune)\\b"
 				}
 			]
 		},

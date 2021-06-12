@@ -8,7 +8,7 @@
 		"odc_print_code": "java -cp odc/build eu.salif.odc.CodePrinter",
 		"odc_print_ast": "java -cp odc/build eu.salif.odc.AstPrinter",
 		"compile": "java -cp odc/build eu.salif.odc.Main",
-		"selfcompile": "npm run compile ./src/ ./build/ && v ./build -o ./build/dododon",
+		"selfcompile": "rm -r ./build/ && npm run compile ./src/ ./build/",
 		"test": "exit 1"
 	},
 	"repository": {

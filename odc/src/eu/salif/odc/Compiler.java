@@ -26,7 +26,8 @@ public class Compiler {
 		StringBuilder builder = new StringBuilder();
 		boolean isWFO = false;
 		boolean isNFD = false;
-		for (Token token : tokens) {
+		for (int i = 0; i < tokens.size(); i++) {
+			Token token = tokens.get(i);
 			if (isWFO) {
 				if (isNFD) {
 					isNFD = false;
@@ -39,15 +40,22 @@ public class Compiler {
 			}
 			if (token.getType().equals(Type.IDENT)) {
 				if (token.getValue().equals("нека")) {
-					isWFO = true;
-					isNFD = true;
-					continue;
+					if (tokens.get(i - 1).getValue().equals("\n")) {
+						builder.append("pub ");
+						token = new Token(Type.KEYWORD, "const");
+					} else {
+						isWFO = true;
+						isNFD = true;
+						continue;
+					}
 				}
 				if (token.getValue().equals("пром")) {
 					isWFO = true;
 				}
 				if (token.getValue().equals("функция")) {
-					builder.append("pub ");
+					if (tokens.get(i - 1).getValue().equals("\n")) {
+						builder.append("pub ");
+					}
 				}
 				token = Util.translateIdent(token);
 			}

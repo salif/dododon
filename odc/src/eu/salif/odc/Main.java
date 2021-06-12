@@ -45,6 +45,11 @@ public class Main {
 		}
 		checkDir(outDir);
 		try {
+			Path vMod = srcDir.resolve("v.mod");
+			Path newVMod = outDir.resolve("v.mod");
+			if (Files.exists(vMod) && Files.notExists(newVMod)) {
+				Files.copy(vMod, newVMod);
+			}
 			compileDir(srcDir, outDir);
 		} catch (Exception e) {
 			die(e);
